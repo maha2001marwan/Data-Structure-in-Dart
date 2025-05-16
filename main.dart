@@ -1,5 +1,5 @@
 // stacks/reverse_list.dart
-//**I wrote two functions to solve the first challenge.**
+**I wrote two functions to solve the first challenge.**
 // This function reverses and prints a list using a stack (LIFO).
 void reverseList(List<int> numbers) {
   List<int> stack = [];
