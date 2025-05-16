@@ -1,0 +1,51 @@
+class Node<E> {
+  E value;
+  Node<E>? next;
+
+  Node(this.value, [this.next]);
+
+  @override
+  String toString() {
+    return next == null ? '$value' : '$value -> ${next.toString()}';
+  }
+}
+
+class LinkedList<E> {
+  Node<E>? head;
+  Node<E>? tail;
+
+  bool get isEmpty => head == null;
+
+  void push(E value) {
+    head = Node(value, head);
+    // لا تقوم بتحديث tail هنا إلا إذا كانت القائمة فارغة
+    if (tail == null) {
+      tail = head;
+    }
+  }
+
+  @override
+  String toString() {
+    return isEmpty ? 'Empty list' : head.toString();
+  }
+}
+
+void printReversed<E>(Node<E>? node) {
+  if (node == null) return;
+  printReversed(node.next);
+  print(node.value);
+}
+
+void main() {
+  final list = LinkedList<int>();
+  list.push(10);
+  list.push(20);
+  list.push(30);
+  list.push(40);
+
+  print('القائمة الأصلية:');
+  print(list); // 40 -> 30 -> 20 -> 10
+
+  print('\nالطباعة بالعكس:');
+  printReversed(list.head); // 10 -> 20 -> 30 -> 40
+}
