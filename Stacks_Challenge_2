@@ -1,1 +1,43 @@
 
+class Stack<T> {
+  final _items = <T>[];
+
+  void push(T value) {
+    _items.add(value);
+  }
+
+  T pop() {
+    return _items.removeLast();
+  }
+}
+
+bool isBalanced(String text) {
+  final stack = Stack<String>();
+
+  for (var ch in text.split('')) {
+    if (ch == '(') {
+      stack.push(ch);
+    } else if (ch == ')') {
+      if (stack._items.isEmpty) {
+        return false;
+      }
+      stack.pop();
+    }
+  }
+
+  return stack._items.isEmpty;
+}
+
+
+    
+void main() {
+  print(isBalanced('(hello(world))'));      // متوازن
+  print(isBalanced('((a + b) * c)'));       // متوازن
+  print(isBalanced('(((()))'));             // غير متوازن - قوس مفتوح ناقص إغلاق
+  print(isBalanced(')(a + b)('));           // غير متوازن - بدأ بإغلاق
+  print(isBalanced('no parentheses here')); // متوازن - لا يوجد أقواس
+  print(isBalanced('(()())'));              // متوازن
+  print(isBalanced('((())')) ;              // غير متوازن
+}
+
+
