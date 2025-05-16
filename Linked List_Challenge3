@@ -1,0 +1,78 @@
+class Node<T> {
+  T value;
+  Node<T>? next;
+
+  Node(this.value, [this.next]);
+
+  @override
+  String toString() {
+    return next == null ? '$value -> null' : '$value -> ${next.toString()}';
+  }
+}
+
+class LinkedList<T> {
+  Node<T>? head;
+  Node<T>? tail;
+
+  // إضافة عنصر إلى النهاية
+  void append(T value) {
+    final newNode = Node(value);
+    if (head == null) {
+      head = newNode;
+      tail = newNode;
+    } else {
+      tail!.next = newNode;
+      tail = newNode;
+    }
+  }
+
+  // عكس القائمة
+  void reverse() {
+    Node<T>? prev = null;
+    Node<T>? current = head;
+    tail = head; // الذيل يصبح الرأس القديم
+
+    while (current != null) {
+      final next = current.next;
+      current.next = prev;
+      prev = current;
+      current = next;
+    }
+    head = prev; // الرأس الجديد هو الذيل القديم
+  }
+
+  // طباعة القائمة بالأسهم
+  void printList() {
+    print(head ?? 'null');
+  }
+}
+
+void main() {
+  final list = LinkedList<int>();
+  list.append(1);
+  list.append(2);
+  list.append(3);
+  list.append(4);
+  list.append(5);
+
+  print('القائمة الأصلية:');
+  list.printList(); // 1 -> 2 -> 3 -> 4 -> 5 -> null
+
+  list.reverse();
+  print('\nالقائمة المعكوسة:');
+  list.printList(); // 5 -> 4 -> 3 -> 2 -> 1 -> null
+
+  // اختبار حالة خاصة: قائمة بعنصر واحد
+  final singleList = LinkedList<int>();
+  singleList.append(10);
+  print('\nقائمة بعنصر واحد:');
+  singleList.printList(); // 10 -> null
+  singleList.reverse();
+  print('بعد العكس:');
+  singleList.printList(); // 10 -> null
+
+  // اختبار حالة خاصة: قائمة فارغة
+  final emptyList = LinkedList<int>();
+  print('\nقائمة فارغة:');
+  emptyList.printList(); // null
+}
