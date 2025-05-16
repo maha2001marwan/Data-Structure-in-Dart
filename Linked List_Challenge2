@@ -1,0 +1,69 @@
+class Node<E> {
+  E value;
+  Node<E>? next;
+
+  Node(this.value, [this.next]);
+
+  @override
+  String toString() {
+    return next == null ? '$value' : '$value -> ${next.toString()}';
+  }
+}
+
+class LinkedList<E> {
+  Node<E>? head;
+  Node<E>? tail;
+
+  bool get isEmpty => head == null;
+
+  void push(E value) {
+    head = Node(value, head);
+    tail ??= head;
+  }
+
+  // دالة لإيجاد العقدة الوسطى
+  Node<E>? findMiddleNode() {
+    if (isEmpty) return null; // إذا كانت القائمة فارغة
+
+    Node<E>? slow = head; // مؤشر بطيء (يتحرك خطوة واحدة)
+    Node<E>? fast = head; // مؤشر سريع (يتحرك خطوتين)
+
+    while (fast?.next != null && fast?.next?.next != null) {
+      slow = slow?.next;
+      fast = fast?.next?.next;
+    }
+
+    return slow; // العقدة الوسطى
+  }
+
+  @override
+  String toString() {
+    return isEmpty ? 'Empty list' : head.toString();
+  }
+}
+
+void main() {
+  final list = LinkedList<int>();
+  list.push(1);
+  list.push(2);
+  list.push(3);
+  list.push(4);
+  list.push(5);
+
+print('القائمة الأصلية: ${list}'); 
+// 5 -> 4 -> 3 -> 2 -> 1 
+
+
+  final middleNode = list.findMiddleNode();
+  print('العقدة الوسطى: ${middleNode?.value}'); // 3
+
+  final evenList = LinkedList<int>();
+  evenList.push(1);
+  evenList.push(2);
+  evenList.push(3);
+  evenList.push(4);
+
+  print('\nالقائمة الأصلية (عدد زوجي): ${evenList}'); // 4 -> 3 -> 2 -> 1
+  final evenMiddle = evenList.findMiddleNode();
+  print('العقدة الوسطى: ${evenMiddle?.value}'); // 3 (العقدة الأولى في الوسط)
+}
